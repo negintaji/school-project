@@ -1,33 +1,955 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>سامانه مدیریت مدرسه</title>
+<title>SchoolHub | مدرسه هوشمند</title>
 
-    <link rel="stylesheet" href="./src/output.css">
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Persian Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root {
+  --navy: #101A3A;
+  --navy-light: #253D7A;
+  --pink: #F45B9A;
+  --pink-light: #FFD5E8;
+  --sky: #DCEEFF;
+  --turquoise: #42CFC3;
+  --lilac: #E9DDFB;
+  --background: #F8F5FF;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Vazirmatn', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--navy);
+  overflow-x: hidden;
+}
+
+/* ================= HEADER ================= */
+
+.top-area {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 75% 10%, #6A9FE9 0%, transparent 35%),
+    radial-gradient(ellipse at 10% 85%, #FFD3EA 0%, transparent 40%),
+    linear-gradient(120deg, #DDEBFF 0%, #F5E9FF 45%, #D7E9FF 100%);
+  padding: 12px 2%;
+}
+
+.navbar {
+  max-width: 1500px;
+  min-height: 76px;
+  margin: auto;
+  padding: 12px 28px;
+  background: linear-gradient(100deg, #101A3A, #182C63, #101A3A);
+  border-radius: 50px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: 0 10px 30px #17244b35;
+  position: relative;
+  z-index: 5;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 27px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.logo-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #FF8DC0, #E83B91);
+  font-size: 25px;
+}
+
+.logo span {
+  color: #F45B9A;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+}
+
+.nav-links a {
+  color: #E8EDFF;
+  text-decoration: none;
+  font-size: 14px;
+  transition: .3s;
+  white-space: nowrap;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #FF79B3;
+}
+
+.nav-links a.active {
+  border-bottom: 3px solid #F45B9A;
+  padding-bottom: 12px;
+}
+
+.nav-login {
+  color: var(--navy);
+  background: #fff;
+  border-radius: 40px;
+  padding: 12px 20px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: .3s;
+}
+
+.nav-login:hover {
+  background: #FFE4F0;
+  transform: translateY(-2px);
+}
+
+/* ================= HERO ================= */
+
+.hero {
+  max-width: 1450px;
+  min-height: 370px;
+  margin: 20px auto 0;
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  direction: ltr;
+  align-items: center;
+  gap: 25px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-text {
+  direction: rtl;
+  text-align: right;
+  padding: 25px 30px;
+}
+
+.welcome-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 17px;
+  border-radius: 30px;
+  background: #FFFFFF9C;
+  color: #263D78;
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid white;
+}
+
+.hero-title {
+  font-size: clamp(32px, 4vw, 53px);
+  font-weight: 900;
+  line-height: 1.65;
+  color: var(--navy);
+  margin: 20px 0 10px;
+}
+
+.hero-title span {
+  color: var(--pink);
+}
+
+.hero-description {
+  color: #27375D;
+  font-size: 17px;
+  line-height: 2.2;
+  margin-bottom: 25px;
+}
+
+.main-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 14px 35px;
+  border-radius: 50px;
+  color: white;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 16px;
+  background: linear-gradient(120deg, #FF7BB5, #EF3190);
+  box-shadow: 0 9px 22px #F45B9A55;
+  transition: .3s;
+}
+
+.main-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 13px 28px #F45B9A70;
+}
+
+.hero-features {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 30px;
+  color: #263D78;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.hero-features span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.hero-features i {
+  color: #E94396;
+  font-size: 17px;
+}
+
+/* Graduation image */
+
+.hero-image-area {
+  position: relative;
+  min-height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-image-area::before {
+  content: "";
+  position: absolute;
+  width: 75%;
+  height: 80%;
+  border-radius: 50%;
+  background: #F7B8DA66;
+  filter: blur(55px);
+}
+
+.graduation-image {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 680px;
+  height: 370px;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 15px 20px #253D7830);
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+
+.decoration {
+  position: absolute;
+  color: #F45B9A;
+  font-size: 35px;
+  z-index: 3;
+  animation: float 4s infinite;
+}
+
+.decoration.one {
+  top: 20px;
+  right: 12%;
+}
+
+.decoration.two {
+  bottom: 35px;
+  left: 5%;
+}
+
+/* ================= HERO BOTTOM STRIP ================= */
+
+.hero-strip {
+  max-width: 550px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 12px;
+  background: #FFFFFFA8;
+  border: 1px solid white;
+  border-radius: 40px;
+  padding: 12px;
+  margin-top: 25px;
+}
+
+.hero-strip span {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--navy);
+  white-space: nowrap;
+}
+
+.hero-strip i {
+  color: #3154A0;
+  margin-left: 5px;
+}
+
+/* ================= PANELS ================= */
+
+.panels-section {
+  padding: 55px 4% 75px;
+  position: relative;
+  background:
+    radial-gradient(circle at 10% 80%, #E6F3FF 0%, transparent 30%),
+    radial-gradient(circle at 90% 20%, #FCE0F0 0%, transparent 30%),
+    #F8F5FF;
+}
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 38px;
+}
+
+.section-heading small {
+  color: #E64C98;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.section-heading h2 {
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--navy);
+  margin: 10px 0;
+}
+
+.section-heading p {
+  color: #777E99;
+  font-size: 14px;
+}
+
+.panels-container {
+  max-width: 1350px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* Panel card */
+
+.panel-card {
+  position: relative;
+  min-height: 290px;
+  padding: 30px 25px;
+  border-radius: 30px;
+  overflow: hidden;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 10px 25px #293D7620;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: .35s ease;
+  text-decoration: none;
+  isolation: isolate;
+}
+
+.panel-card::before {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  left: -80px;
+  bottom: -120px;
+  background: #FFFFFF70;
+  z-index: -1;
+}
+
+.panel-card::after {
+  content: "";
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  right: -85px;
+  top: -90px;
+  background: #FFFFFF60;
+  z-index: -1;
+}
+
+.panel-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px #293D7630;
+}
+
+.admin-card {
+  background: linear-gradient(145deg, #E8DDFB, #DDE9FF);
+}
+
+.student-card {
+  background: linear-gradient(145deg, #FFE0F0, #F7E7FF);
+}
+
+.parent-card {
+  background: linear-gradient(145deg, #DDF3FF, #DFF9F5);
+}
+
+.panel-icon {
+  width: 85px;
+  height: 85px;
+  border-radius: 26px;
+  display: grid;
+  place-items: center;
+  font-size: 38px;
+  margin-bottom: 17px;
+  box-shadow: 0 8px 20px #17244b12;
+  background: #FFFFFFC9;
+}
+
+.admin-card .panel-icon {
+  color: #7651BD;
+}
+
+.student-card .panel-icon {
+  color: #E74797;
+}
+
+.parent-card .panel-icon {
+  color: #2788B8;
+}
+
+.panel-card h3 {
+  font-size: 22px;
+  font-weight: 900;
+  margin: 5px 0 10px;
+  color: var(--navy);
+}
+
+.panel-card p {
+  color: #59627E;
+  font-size: 13px;
+  line-height: 2;
+  margin: 0 0 20px;
+}
+
+.panel-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 220px;
+  padding: 13px 20px;
+  border-radius: 40px;
+  background: linear-gradient(120deg, #FF83B7, #ED3691);
+  color: white;
+  font-size: 14px;
+  font-weight: 800;
+  box-shadow: 0 8px 18px #EF4D9950;
+  transition: .3s;
+}
+
+.panel-card:hover .panel-button {
+  box-shadow: 0 10px 25px #EF4D9970;
+  transform: scale(1.03);
+}
+
+/* ================= ABOUT STRIP ================= */
+
+.about-section {
+  background: #E7F2FF;
+  padding: 35px 20px;
+  text-align: center;
+}
+
+.about-section h3 {
+  font-size: 21px;
+  font-weight: 900;
+  color: var(--navy);
+}
+
+.about-section p {
+  max-width: 700px;
+  margin: 12px auto 0;
+  color: #66708D;
+  line-height: 2.2;
+  font-size: 14px;
+}
+
+/* ================= FOOTER ================= */
+
+.footer {
+  background: linear-gradient(110deg, #101A3A, #192D65, #101A3A);
+  color: white;
+  padding: 35px 5%;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer::before {
+  content: "";
+  position: absolute;
+  width: 350px;
+  height: 150px;
+  background: #F45B9A;
+  filter: blur(100px);
+  opacity: .16;
+  top: -100px;
+  left: 20%;
+}
+
+.footer-content {
+  max-width: 1350px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.footer-logo {
+  font-size: 26px;
+  font-weight: 900;
+}
+
+.footer-logo span {
+  color: #F45B9A;
+}
+
+.footer-slogan {
+  color: #F4C9E0;
+  font-size: 15px;
+}
+
+.social-links {
+  display: flex;
+  gap: 12px;
+}
+
+.social-links a {
+  width: 39px;
+  height: 39px;
+  border: 1px solid #FFFFFF70;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: white;
+  text-decoration: none;
+  transition: .3s;
+}
+
+.social-links a:hover {
+  background: #F45B9A;
+  border-color: #F45B9A;
+  transform: translateY(-4px);
+}
+
+.copyright {
+  color: #C8D4F2;
+  font-size: 11px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width: 950px) {
+  .nav-links {
+    gap: 15px;
+  }
+
+  .hero {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hero-title {
+    font-size: 35px;
+  }
+
+  .panels-container {
+    gap: 15px;
+  }
+
+  .panel-card {
+    padding: 25px 15px;
+  }
+}
+
+@media(max-width: 700px) {
+  .navbar {
+    border-radius: 22px;
+    padding: 12px 15px;
+  }
+
+  .logo {
+    font-size: 21px;
+  }
+
+  .logo-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-login {
+    padding: 10px 13px;
+    font-size: 11px;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 5px;
+    padding-top: 20px;
+  }
+
+  .hero-text {
+    padding: 15px 5px;
+  }
+
+  .hero-title {
+    font-size: 34px;
+  }
+
+  .hero-description {
+    font-size: 14px;
+  }
+
+  .hero-image-area {
+    min-height: 260px;
+  }
+
+  .graduation-image {
+    height: 290px;
+  }
+
+  .hero-strip {
+    flex-wrap: wrap;
+    border-radius: 20px;
+  }
+
+  .panels-section {
+    padding: 45px 6%;
+  }
+
+  .section-heading h2 {
+    font-size: 24px;
+  }
+
+  .panels-container {
+    grid-template-columns: 1fr;
+    max-width: 430px;
+  }
+
+  .panel-card {
+    min-height: 250px;
+  }
+
+  .footer-content {
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+  }
+}
+</style>
 </head>
 
-<body class="bg-slate-950 text-white">
+<body>
 
-    <div class="flex min-h-screen items-center justify-center">
+<!-- ================= TOP AREA ================= -->
 
-        <div class="text-center">
+<header class="top-area" id="home">
 
-            <h1 class="text-5xl font-bold text-violet-400">
-                سامانه مدیریت مدرسه
-            </h1>
+  <!-- NAVBAR -->
 
-            <p class="mt-4 text-xl text-slate-300">
-                Tailwind CSS با موفقیت راه‌اندازی شد 🎉
-            </p>
+  <nav class="navbar">
 
-        </div>
+    <a href="#home" class="logo" style="text-decoration:none;color:white">
+
+      <div class="logo-icon">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+
+      <div>
+        School<span>Hub</span>
+      </div>
+
+    </a>
+
+    <div class="nav-links">
+
+      <a href="#home" class="active">خانه</a>
+
+      <a href="#panels">امکانات</a>
+
+      <a href="#about">درباره ما</a>
+
+      <a href="#contact">تماس با ما</a>
 
     </div>
 
-</body>
+    <a href="#panels" class="nav-login">
+      ورود به سامانه
+      <i class="fa-solid fa-chevron-left mr-2"></i>
+    </a>
 
+  </nav>
+
+
+  <!-- HERO SECTION -->
+
+  <main class="hero">
+
+    <!-- WELCOME TEXT -->
+
+    <div class="hero-text">
+
+      <div class="welcome-label">
+        <i class="fa-solid fa-sparkles" style="color:#E94396"></i>
+        تجربه‌ای متفاوت در دنیای آموزش
+      </div>
+
+      <h1 class="hero-title">
+        به مدرسه هوشمند
+        <br>
+        <span>خوش آمدید ♡</span>
+      </h1>
+
+      <p class="hero-description">
+        همه چیز برای یک تجربه آموزشی بهتر آماده است.
+        <br>
+        با هم یاد می‌گیریم، رشد می‌کنیم و آینده‌ای روشن می‌سازیم.
+      </p>
+
+      <a href="#panels" class="main-button">
+        شروع کاوش
+        <i class="fa-solid fa-arrow-left"></i>
+      </a>
+
+      <div class="hero-strip">
+
+        <span>
+          <i class="fa-solid fa-star"></i>
+          آینده روشن
+        </span>
+
+        <span>
+          <i class="fa-solid fa-users"></i>
+          ارتباط آسان
+        </span>
+
+        <span>
+          <i class="fa-solid fa-graduation-cap"></i>
+          یادگیری هوشمند
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- GRADUATION IMAGE -->
+
+    <div class="hero-image-area">
+
+      <span class="decoration one">♡</span>
+      <span class="decoration two">✦</span>
+
+      <img
+        src="assets/images/file_000000009f3482469fbbb64b61dd2175.png"
+        alt="دختر و پسر فارغ التحصیل"
+        class="graduation-image"
+      >
+
+    </div>
+
+  </main>
+
+</header>
+
+
+<!-- ================= PANEL SELECTION ================= -->
+
+<section class="panels-section" id="panels">
+
+  <div class="section-heading">
+
+    <small>SCHOOLHUB PORTALS</small>
+
+    <h2>از کجا می‌خواهید وارد شوید؟</h2>
+
+    <p>
+      پنل اختصاصی خود را انتخاب کنید و وارد سامانه شوید.
+    </p>
+
+  </div>
+
+
+  <div class="panels-container">
+
+
+    <!-- ADMIN PANEL -->
+
+    <a href="admin/dashboard.html"
+       class="panel-card admin-card">
+
+      <div class="panel-icon">
+        <i class="fa-solid fa-school"></i>
+      </div>
+
+      <h3>پنل مدیریت مدرسه</h3>
+
+      <p>
+        مدیریت هوشمند مدرسه در یک محیط یکپارچه و آسان
+      </p>
+
+      <span class="panel-button">
+        ورود به پنل
+        <i class="fa-solid fa-arrow-left"></i>
+      </span>
+
+    </a>
+
+
+    <!-- STUDENT PANEL -->
+
+    <a href="student/dashboard.html"
+       class="panel-card student-card">
+
+      <div class="panel-icon">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+
+      <h3>پنل دانش‌آموز</h3>
+
+      <p>
+        همراهی در مسیر یادگیری، پیشرفت و موفقیت تحصیلی
+      </p>
+
+      <span class="panel-button">
+        ورود به پنل
+        <i class="fa-solid fa-arrow-left"></i>
+      </span>
+
+    </a>
+
+
+    <!-- PARENT PANEL -->
+
+    <a href="parent/dashboard.html"
+       class="panel-card parent-card">
+
+      <div class="panel-icon">
+        <i class="fa-solid fa-users"></i>
+      </div>
+
+      <h3>پنل اولیا</h3>
+
+      <p>
+        همراهی خانواده در مسیر رشد و موفقیت فرزندان
+      </p>
+
+      <span class="panel-button">
+        ورود به پنل
+        <i class="fa-solid fa-arrow-left"></i>
+      </span>
+
+    </a>
+
+
+  </div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section class="about-section" id="about">
+
+  <h3>
+    <i class="fa-solid fa-heart" style="color:#F45B9A"></i>
+    یک مدرسه، یک خانواده، یک آینده روشن
+  </h3>
+
+  <p>
+    SchoolHub با هدف ایجاد ارتباطی آسان میان مدرسه،
+    دانش‌آموزان و خانواده‌ها طراحی شده است.
+    یادگیری، پیشرفت و ارتباط بهتر در یک فضای هوشمند.
+  </p>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer" id="contact">
+
+  <div class="footer-content">
+
+    <div class="footer-logo">
+      <i class="fa-solid fa-graduation-cap" style="color:#F45B9A"></i>
+      School<span>Hub</span>
+    </div>
+
+    <div class="footer-slogan">
+      ♡ با هم، برای فردایی روشن‌تر
+    </div>
+
+    <div class="social-links">
+
+      <a href="#" aria-label="Telegram">
+        <i class="fa-brands fa-telegram"></i>
+      </a>
+
+      <a href="#" aria-label="Instagram">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+
+      <a href="#" aria-label="LinkedIn">
+        <i class="fa-brands fa-linkedin-in"></i>
+      </a>
+
+      <a href="#" aria-label="YouTube">
+        <i class="fa-brands fa-youtube"></i>
+      </a>
+
+    </div>
+
+    <div class="copyright">
+      © 2026 SchoolHub | تمامی حقوق محفوظ است.
+    </div>
+
+  </div>
+
+</footer>
+
+
+</body>
 </html>
